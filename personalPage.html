@@ -1,0 +1,190 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="email=no"/>
+    <title>我的</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/personalPage.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/lib/amazeui.min.js"></script>
+    <script src="assets/js/public.js"></script>
+    <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <style>
+        .weui-dialog__ft {
+            font-size: 1.6rem;
+        }
+    </style>
+</head>
+
+<script type="text/javascript">
+    <!-- 页面加载完成请求持仓信息 -->
+    $(document).ready(function () {
+        var Login = sessionStorage.getItem('isLogin');
+        if (Login == "true") {
+            $("#login-enter").hide();
+            $(".person-info").show();
+            var firmName = sessionStorage.getItem('firmName');
+            console.log("=========" + firmName)
+            if (firmName != "null") {
+                $("#myPage_Name").html(firmName);
+            }
+            get_yongHuYuE();
+        } else {
+            $("#login-enter").show();
+        }
+    })
+</script>
+<script>
+    var locationHref;
+
+    function noteLogin(id) {
+        var Login = sessionStorage.getItem('isLogin');
+        switch (id) {
+            case 0:
+                checkStatusGoPage(1, "myOrderListPage.html");
+                break;
+            case 1:
+                checkStatusGoPage(1, "myBankListPage.html");
+                break;
+            case 6:
+                checkStatusGoPage(1, "sheZhiPage.html");
+                break;
+            case 10:
+                checkStatusGoPage(2, "mingXiPage.html");
+                break;
+            case 11:
+                checkStatusGoPage(3, "chongZhiPage.html");
+
+                break;
+            case 12:
+                checkStatusGoPage(3, "tiXianPage.html");
+                break;
+        }
+    }
+    function listClick(id) {
+        switch (id) {
+            case 4:
+                document.location.href = "heZuoXiYiPage.html";
+                break;
+        }
+    }
+
+</script>
+<body style="background-color: #212a32">
+<div id="person-info-box-parent">
+    <div class="person-info-box">
+        <div class="person-img">
+            <img class="woDe-card-image" src="assets/i/nav-personal@2x.png">
+        </div>
+        <div class="person-info" style="display: none;">
+            <p style="font-size:1.4rem;">帐号：<span id="myPage_Name">----</span></p>
+            <p style="font-size:1.4rem;13426211181">余额：<span id="myPage_YUE">----</span></p>
+        </div>
+        <a id="login-enter" class="login-enter" href="Login.html" style="display: none;color: #fff;">登录/注册</a>
+        <div style="clear: both;">
+            <ul class="am-avg-sm-3 uchome-apps-ul" style="overflow: hidden;">
+                <li style="margin-top: -5px;" onclick="noteLogin(10)">
+                    <p class="imgp"><img src="assets/i/mingXi@2x.png" class="am-img-responsive"/></p>
+                    <p class="namep" style="color:#ffffff;font-size: 1.4rem;margin-left:0;margin-top: -8px;">明细</p>
+                </li>
+                <li style="margin-top: -5px;" onclick="noteLogin(11)">
+                    <p class="imgp"><img src="assets/i/chongZhi@2x.png" class="am-img-responsive"/></p>
+                    <p class="namep" style="color:#ffffff;font-size: 1.4rem;margin-left:0;margin-top: -8px;">充值</p>
+                </li>
+                <li style="margin-top: -5px;" onclick="noteLogin(12)">
+                    <p class="imgp"><img src="assets/i/tiXian@2x.png" class="am-img-responsive"/></p>
+                    <p class="namep" style="color:#ffffff;font-size: 1.4rem;margin-left:0;margin-top: -8px;">提现</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<div style="margin-top: -20px;">
+    <ul class="am-list am-text-sm my-pay-ul" style="margin-bottom: -5px;">
+        <li onclick="noteLogin(0)" style="background-color: #353e45;border-bottom: 2px dashed #4a535b;">
+            <a href="javascript:;" style="color:#FFFFFF;">
+                <span class="am-fr"><img src="assets/i/leftJT@0.5x.png"/>&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/i/order.png"/>&nbsp;&nbsp;&nbsp;&nbsp;我的订单
+            </a>
+        </li>
+        <li onclick="noteLogin(1)" style="background-color: #353e45;border-bottom: 2px dashed #4a535b;">
+            <a href="javascript:;" style="color:#FFFFFF;">
+                <span class="am-fr"><img src="assets/i/leftJT@0.5x.png"/>&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/i/bank.png"/>&nbsp;&nbsp;&nbsp;&nbsp;银行卡
+            </a>
+        </li>
+        <li onclick="noteLogin(2)" style="background-color: #353e45;border-bottom: 2px dashed #4a535b;">
+            <a href="javascript:;" style="color:#FFFFFF;">
+                <span class="am-fr"><img src="assets/i/leftJT@0.5x.png"/>&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/i/share.png"/>&nbsp;&nbsp;&nbsp;&nbsp;我的推广
+            </a>
+        </li>
+        <li onclick="noteLogin(3)" style="background-color: #353e45;border-bottom: 2px dashed #4a535b;">
+            <a href="javascript:;" style="color:#FFFFFF;">
+                <span class="am-fr"><img src="assets/i/leftJT@0.5x.png"/>&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/i/information.png"/>&nbsp;&nbsp;&nbsp;&nbsp;我的消息
+            </a>
+        </li>
+        <li>
+            <a href="heZuoXiYiPage.html"
+               style="background-color: #353e45;border-bottom: 2px dashed #4a535b;color: #fff;">
+                <span class="am-fr"><img src="assets/i/leftJT@0.5x.png"/>&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/i/cooperation.png"/>&nbsp;&nbsp;&nbsp;&nbsp;合作协议
+            </a>
+        </li>
+        <li>
+            <a href="tel:010—64106166" style="background-color: #353e45;border-bottom: 2px dashed #4a535b;color: #fff;">
+                <span class="am-fr"><img src="assets/i/leftJT@0.5x.png"/>&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/i/service.png"/>&nbsp;&nbsp;&nbsp;&nbsp;客服热线
+            </a>
+        </li>
+        <li onclick="noteLogin(6)" style="background-color: #353e45;border-bottom: 2px dashed #4a535b;">
+            <a href="javascript:;" style="color:#FFFFFF;">
+                <span class="am-fr"><img src="assets/i/leftJT@0.5x.png"/>&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/i/install.png"/>&nbsp;&nbsp;&nbsp;&nbsp;设置
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- Navbar -->
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default " id="" style="border:none;">
+    <ul class="am-navbar-nav am-cf am-avg-sm-4 nav-bar-bg" style="background-color: #3d464e;">
+        <li>
+            <a href="index.html">
+                <img src="assets/i/nav-home@2x.png"/>
+                <span class="am-navbar-label">首页</span>
+            </a>
+        </li>
+        <li>
+            <a href="optionalStockPage.html">
+                <img src="assets/i/nav-stock@2x.png"/>
+                <span class="am-navbar-label">策略</span>
+            </a>
+        </li>
+        <li>
+            <a href="xunjia.html">
+                <img src="assets/i/nav-trade@2x.png"/>
+                <span class="am-navbar-label">交易</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="assets/i/nav-personalr@2x.png"/>
+                <span class="am-navbar-label" style="color:#ff4040;">我的</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

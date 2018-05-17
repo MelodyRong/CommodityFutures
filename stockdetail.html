@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html style="font-size: 10px!important;">
+<head>
+  <meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+  <title>行情</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+  <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/public.css"> 
+  <link rel="stylesheet" href="assets/css/stockdetail.css"> 
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+  <script src="assets/js/stockdetail.js"></script>
+
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+  <script type="text/javascript"> 
+    $(document).ready(function() {
+    	var Login = sessionStorage.getItem('isLogin');
+    	var timer;
+			if(Login == "true"){
+      	panDuanZiXuan();
+			}
+      getHQ();
+      setImg(1);
+      setInterval(function()
+      {
+      	getHQ();
+      },1000);
+		  //设置提示框消失时间
+		  $.toast.prototype.defaults.duration = 1000;
+    });
+  </script> 
+</head>
+<body class="page" style="background-color:#212a32 ;">
+	<header data-am-widget="header" class="am-header am-header-default view-header" style="background-color: #353e45;border-bottom: 1px solid #696969;">
+	  <div class="am-header-nav" onclick="window.history.go(-1);">
+	      <img src="assets/i/back.png" style="width:30px;height: 30px;">
+	  </div>
+	  <h1 class="am-header-title">
+	      <a href="#title-link" class="" style="color: white;">行情</a>
+	  </h1>
+  </header>
+  <div class="flex_column width100">
+    <div class="flex_row width100 margin">
+     <div class="flex_column width50" >
+      <div  class="red bold" id="zuixin" style="font-size: 30px;color: white;" >--</div>
+      <div class="flex_between">
+        <div id="zhangdiejia" >--</div>
+        <div  id="zhangdiefu" style="margin-left: 10px">--</div>
+      </div>
+    </div>
+
+    <div class="flex_row width50" style="font-size: 1.4rem;color: white;">
+      <div class="flex_column">
+        <div class="flex_between" >
+          <div class="little_margin">昨收</div>
+          <div id="zuoshou" class="little_margin bold">--</div>
+        </div>
+        <div class="flex_between">
+          <div class="little_margin">最高</div>
+          <div id="zuigao"  class="little_margin bold">--</div>
+        </div>
+      </div>
+      <div class="flex_column" style="margin-left: 1rem;">
+        <div class="flex_between">
+          <div class="little_margin">今开</div>
+          <div id="jinkai"  class="little_margin bold">--</div>
+        </div>
+        <div class="flex_between">
+          <div class="little_margin">最低</div>
+          <div id="zuidi" class="little_margin bold">--</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="margin flex_row width100" style="color: white;"> 
+    <div class=" flex_column width33 flex_around margin_left_right1">
+    	<div class="flex_between width100">
+        <div class="margin_left_right title">买价</div>
+        <div  id="maijia1"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">振幅</div>
+        <div id="zhenfu"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">内盘</div>
+        <div id="neipan"   class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">结算值</div>
+        <div  id="jiesuan"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+    </div> 
+    <div class="flex_column width33 flex_around margin_left_right1">
+    	<div class="flex_between width100">
+        <div class="margin_left_right title">卖价</div>
+        <div  id="mai2jia"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">成交量</div>
+        <div  id="chengjiaoliang"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">外盘</div>
+        <div  id="waipan"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">市净率</div>
+        <div id="shijinlv"   class="margin_left_right bold stocknumber">--</div>
+      </div>
+    </div>
+    <div class="flex_column flex_around width33 margin_left_right1">
+    	<div class="flex_between width100">
+        <div class="margin_left_right title">昨结价</div>
+        <div  id="zuojie"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">成交额</div>
+        <div  id="chengjiaoe"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">总市值</div>
+        <div  id="zongshizhi"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+      <div class="flex_between width100">
+        <div class="margin_left_right title">流通市值</div>
+        <div  id="liutongshizhi"  class="margin_left_right bold stocknumber">--</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flex_row flex_around" id="div_grids" style="color: white;">
+  <div  class="selected" id="5mk-img" onclick="mclick($(this))" style="background-color: #313a45;border: none;">
+    5分K
+  </div>
+  <div  class="unselected" id="15mk-img" onclick="mclick($(this))" style="border: none;">
+    15分K
+  </div>
+  <div  class="unselected" id="30mk-img" onclick="mclick($(this))" style="border: none;">
+  30分K
+</div>
+  <div  class="unselected" id="60mk-img" onclick="mclick($(this))" style="border: none;">
+    60分K
+  </div>
+  <div   class="unselected"   onclick="mclick($(this))" style="border: none;" >
+    日K
+  </div>
+</div>
+    <div class="kTu" id="kTu" style="height:220px;"></div>
+</div>
+<div  class="toBottom flex_row">
+  <div class="bottom_del" id="zixuan" style="background-color: #696969;">添加自选</div>
+  <div class="bottom_xunjia " id="xunjia">一键询价</div>
+</div>
+</body>
+</html>

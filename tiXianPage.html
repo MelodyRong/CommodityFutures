@@ -1,0 +1,128 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <title>提现</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/cashFlow.css"/>
+
+    <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+    <script type='text/javascript' src='assets/js/lib/weui.min.js'></script>
+    <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
+</head>
+
+<script type="text/javascript">
+    <!-- 页面加载完成请求资金明细 -->
+    $(document).ready(function () {
+        sessionStorage.setItem('pageName', "tiXianPage.html");
+        cashableBankName();
+        //设置提示框消失时间
+        $.toast.prototype.defaults.duration = 1000;
+    })
+</script>
+<!-- 动态获取可提现银行列表-->
+<script id="cashable_bank_temp" type="text/x-jquery-tmpl">
+  <li onclick="get_bank_name(this)" style="background-color: #353e45;color: white;border-top:1px solid #4c4f59;border-bottom: 1px dashed #4c4f59;">${bankName}</li>
+</script>
+<body style="background-color: #212a32;">
+<header data-am-widget="header" class="am-header am-header-default view-header my-header"
+        style="background: #353e45;border-bottom: 1px solid #696969;">
+    <div class="am-header-left am-header-nav" onclick="window.history.go(-1);"
+         style="background: url(assets/i/c48865d7_d934_4183_9e36_ef16d6eb08e7@1x@2x.png);background-size: 100% 100%;">
+        <a href="#left-link" class="">
+            <i class="am-header-icon"></i>
+        </a>
+    </div>
+    <h1 class="am-header-title">
+        <a href="#title-link" class="">提现</a>
+    </h1>
+</header>
+<div class="invest-bank" onclick="toggle_list(this)" style="background-color: #353e45;">
+    <div class="bank-logo">
+        <img src="assets/i/bankLogo/bank-icon@1x.png"/>
+    </div>
+    <div class="bank-msg">
+        <h2 id="sebank" style="color: white;"></h2>
+        <p style="color: white;">单笔限额5万，单日限额20万</p>
+    </div>
+    <div class="select-bank-arrow">
+        <img src="assets/i/index/right-arrow.png">
+    </div>
+    <ul id="cashable-bank-list"></ul>
+</div>
+<div class="handwriting" style="margin-bottom: 4rem;background-color: #353e45;">
+    <label for="" style="color: white;">金额</label>
+    <input type="text" id="withdrawal-amount" placeholder="请输入提现金额" style="background-color: #353e45;color: white;"/>
+</div>
+<div class="invest-btn" id="withdrawal_amount" onclick="getIsPayPwd()">提现</div>
+<div class="about-password">
+    <div class="change-password" onclick="window.location.href='changePaymentPassword.html'">修改支付密码</div>
+</div>
+<script type="text/javascript">
+    //显示可充值银行list
+    function toggle_list(ele) {
+        if ($(ele).hasClass("list-active")) {
+            $(ele).removeClass("list-active")
+        } else {
+            $(ele).addClass("list-active");
+        }
+    }
+
+    //选择可充值银行
+    function get_bank_name(ele) {
+        $("#sebank").html($(ele).html());
+    }
+
+    /****判断是否已设置支付密码*****/
+    function getIsPayPwd() {
+        var re = /^(?:[1-9][0-9]*(?:\.[0-9]+)?|0\.(?!0+$)[0-9]+)$/;
+        var num = parseFloat($("#withdrawal-amount").val());
+        if ($("#withdrawal-amount").val() == "") {
+            $.toast("请输入提现金额", "text");
+            return false;
+        }
+        if (!re.test(num)) {
+            $.toast("请输入有效金额", "text");
+            return false;
+        }
+        var reqData = {};
+        reqData.firmCode = sessionStorage.firmCode;
+        var url = requestUrl + "appUserCenter/getIsPayPwd";
+        sendRequestUtil(url, reqData, getIsPayPwd_success);
+    }
+
+    function getIsPayPwd_success(data) {
+        var retCode = data.retCode;
+        var retMessage = data.retMessage;
+        if (retCode == "0000") {
+            var retData = data.retData
+            if (retData.status) {
+                var num = parseFloat($("#withdrawal-amount").val());
+                sessionStorage.setItem('money', num);
+                window.location.href = "enterPassword.html";
+            }
+            else {
+                $.toast("请先设置支付密码", "text", function () {
+                    window.location.href = "setPaymentPassword.html";
+                });
+            }
+        }
+        else {
+            $.toast(retMessage, "text");
+        }
+    }
+</script>
+</body>
+</html>
+

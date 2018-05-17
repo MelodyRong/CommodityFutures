@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <title>签约</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.address.min.css"/>
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/bankListPage.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+
+    <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/lib/amazeui.min.js"></script>
+    <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var branchDic = JSON.parse(localStorage.getItem('selectedBranchDic'));
+            $("#branchBank-Name").html(branchDic.mBranchname);
+
+            //设置提示框消失时间
+            $.toast.prototype.defaults.duration = 1000;
+        })
+    </script>
+
+</head>
+<body style="background-color:#353e45">
+<header data-am-widget="header" class="am-header am-header-default view-header"
+        style="background-color: #353e45;border-bottom: 1px solid #696969;">
+    <div class=" am-header-nav" onclick="window.history.go(-1);">
+        <img src="assets/i/back.png" style="width:30px;height: 30px;"/>
+    </div>
+    <h1 class="am-header-title">
+        <a href="#title-link" class="" style="color: white;">绑定银行卡</a>
+    </h1>
+</header>
+<div class="bankLi-List">
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">发卡行：</div>
+        <a href="javascript: void(0)" id="branchBank-Name" class="bankLi-List rightLabel" style="color: #ff4040;"></a>
+    </div>
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">银行卡号：</div>
+        <input id="bankCard-Num" class="bankLi-List rightLabel" placeholder="请输入银行卡号" style="color: white;">
+    </div>
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">手机号：</div>
+        <input id="QY-mobileNum" class="bankLi-List rightLabel" placeholder="请输入银行预留手机号" maxlength="15"
+               style="color: white;">
+    </div>
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">验证码：</div>
+        <input style="width: 40%;float: left;" id="QY-SMSNum" class="bankLi-List rightLabel" placeholder="请输入验证码"
+               style="color: white;">
+        <div class="getCode" onclick="get_AuthenticationCode()" style="color: blue;">获取验证码</div>
+    </div>
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">真实姓名：</div>
+        <input id="QY-userName" class="bankLi-List rightLabel" placeholder="请输入户主姓名" style="color: white;">
+    </div>
+
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">身份证号：</div>
+        <input id="QY-IDNumber" class="bankLi-List rightLabel" placeholder="请输入身份证号" style="color: white;">
+    </div>
+</div>
+<div class="bankLi-button" onclick="get_marketSignInfo()"
+     style="background-color: red;border-radius: 10px;color: white;">签约
+</div>
+</body>
+</html>

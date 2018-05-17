@@ -1,0 +1,159 @@
+
+:root {
+    --bggrey: #F5F5F5;
+    --deepgrey: #666666;
+    --white: #FFFFFF;
+    --red: #e94c37;
+    --black: #555555;
+    --btheight: 35px;
+    --red: #e94c37;
+    --green: #0e7e12;
+}
+
+.green {
+    color: var(--green);
+}
+
+.red {
+    color: var(--red);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.backgroundcolor {
+
+    background-color: var(--bggrey);
+}
+
+.white {
+
+    background-color: var(--white);
+    background: var(--white);
+}
+
+.breakGrey {
+    width: 100%;
+    height: 10px;
+    background: var(--bggrey);
+}
+
+.divider {
+    width: 90%;
+    height: 1px;
+    background: var(--bggrey);
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.divider_full {
+    width: 100%;
+    height: 1px;
+    background: var(--bggrey);
+}
+
+.flex_row {
+
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -webkit-transition: .3s;
+    transition: .3s;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+}
+
+.flex_column {
+
+    -webkit-transition: .3s;
+    transition: .3s;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: column;
+}
+
+.flex_column_nocenter {
+
+    -webkit-transition: .3s;
+    transition: .3s;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: column;
+}
+
+.flex_between, .history_line, .history_line2 {
+
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex_around {
+    justify-content: space-around;
+}
+
+.newlist {
+    background-color: #212a32;
+    line-style: none;
+    color: #ccc;
+    border-bottom: 1px deshed #ccc;
+    margin: 0;
+    padding: 10px 0 10px 0;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btnLiOne {
+    width: 30px;
+    height: 30px;
+    background-color: #212a32;
+    color: red;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid red;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+
+.btnLiFive {
+    width: 50px;
+    height: 30px;
+    background-color: #212a32;
+    color: red;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid red;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+/*自选页订单列表*/
+.zxList {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.zxList_liFive {
+    width: 50px;
+    height: 30px;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.zhangdiecolor {
+    /*这个class用来判断颜色，无需设置样式*/
+}

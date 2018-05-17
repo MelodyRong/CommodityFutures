@@ -1,0 +1,87 @@
+.bankLi-card {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 250px;
+    background-color: #ff4040;
+}
+
+.bankLi-card .image {
+    width: 100px;
+    height: 100px;
+    margin-top: 1px;
+    background: #d8d8d8;
+    border: 4px solid #c93434;
+    border-radius: 10px;
+}
+
+.bankLi-card-biaoTi {
+    font-family: PingFang-SC-Regular;
+    font-size: 2.0rem;
+    color: #ffffff;
+    margin-top: 25px;
+}
+
+.bankLi-List {
+    width: 100%;
+    background-color: #353e45;
+}
+
+.bankLi-List .cell {
+    width: 100%;
+    height: 5rem;
+    border-bottom: 1px dashed #4c4f59;
+}
+
+.bankLi-List .leftLabel {
+    width: 25%;
+    height: 5rem;
+    float: left;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: PingFang-SC-Regular;
+    text-align: right;
+    line-height: 5rem;
+    font-size: 1.4rem;
+}
+
+.bankLi-List .rightLabel {
+    display: block;
+    float: right;
+    width: 75%;
+    height: 3rem;
+    overflow: hidden;
+    margin-top: 1rem;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: PingFang-SC-Regular;
+    text-align: left;
+    line-height: 3rem;
+    font-size: 1.4rem;
+    border: none;
+    outline: none;
+}
+
+.bankLi-button {
+    font-family: PingFang-SC-Regular;
+    font-size: 1.6rem;
+    color: white;
+    text-align: center;
+    height: 5rem;
+    margin-top: 1rem;
+    line-height: 5rem;
+    background-color: red;
+    border-radius: 10px;
+}
+
+.getCode {
+    width: 35%;
+    height: 5rem;
+    line-height: 5rem;
+    float: left;
+}
+
+
+
+
+

@@ -1,0 +1,84 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<title>策略</title>
+
+	<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+	<link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+	<link rel="stylesheet" href="assets/css/common.css"> 
+	<link rel="stylesheet" href="assets/css/public.css">  
+	<link rel="stylesheet" href="assets/css/optionalStockPage.css">
+
+	<script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+	<script src="assets/js/optionalStockPage.js"></script>
+	<script src="assets/js/public.js"></script>
+
+	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+	<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+  		optionalStock();
+	});
+</script>
+</head>
+<body style="background-color:#212a32;">
+	<header data-am-widget="header" class="am-header am-header-default view-header" style="background-color: #353e45;border-bottom: 1px solid 	#696969;">
+		<div class="am-header-nav" onclick="window.history.go(-1);">
+			<img src="assets/i/back.png" style="width:30px;height: 30px;"/>
+		</div>
+		<h1 class="am-header-title">
+			<a href="#title-link" class="" style="color:white;">策略</a>
+		</h1>
+	</header>
+	<div>
+		<div class="search-r" id="search" >请输入商品期货代码/名称
+			<i>
+				<img src="assets/i/index/search-index.png"/>
+			</i>
+		</div>		
+	</div>
+	<div class="flex" style="background-color:#353e45;border-bottom: 1px solid #4a535b;">
+		<div class="list_text_bold" style="margin-left:1rem;">合约名称</div>
+		<div class="list_text_bold" style="margin-left:3rem;">最新价</div>
+		<div class="list_text_bold">涨跌</div>
+		<div class="list_text_bold">涨跌幅</div>
+		<div class="list_text_bold" style="margin-right:2rem;">操作</div>
+	</div>
+	<div id="content_optional">
+
+	</div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default " style="border:none;">
+	<ul class="am-navbar-nav am-cf am-avg-sm-4 nav-bar-bg" style="background-color:#3d464e;">
+		<li>
+			<a href="index.html">
+				<img src="assets/i/nav-home@2x.png"/>
+				<span class="am-navbar-label">首页</span>
+			</a>
+		</li>
+		<li>
+			<a href="javascript:;">
+				<img src="assets/i/nav-stockr@2x.png"/>
+				<span class="am-navbar-label" style="color:#ff4040;">策略</span>
+			</a>
+		</li>
+		<li>
+			<a href="xunjia.html">
+				<img src="assets/i/nav-trade@2x.png"/>
+				<span class="am-navbar-label">交易</span>
+			</a>
+		</li>
+	  <li>
+	  	<a href="personalPage.html">
+	  		<img src="assets/i/nav-personal@2x.png" />
+	  		<span class="am-navbar-label">我的</span>
+	  	</a>
+	  </li>
+	</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+.sheZhi-card {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 20rem;
+    background: url(../i/my/bgc_img.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.sheZhi-card .image {
+    width: 100px;
+    height: 100px;
+    margin-top: 1px;
+    background: #d8d8d8;
+    border-radius: 10px;
+}
+
+.sheZhi-card-biaoTi {
+    font-family: PingFang-SC-Regular;
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin-top: 2rem;
+}
+
+.sheZhi-List {
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.sheZhi-List .cell {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.sheZhi-List .leftLabel {
+    width: 25%;
+    height: 5rem;
+    float: left;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: PingFang-SC-Regular;
+    font-size: 1.4rem;
+    text-align: right;
+    line-height: 5rem;
+    letter-spacing: 0.2rem;
+}
+
+.sheZhi-List .rightLabel {
+    width: 75%;
+    height: 50px;
+    float: right;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: PingFang-SC-Regular;
+    font-size: 1.6rem;
+    text-align: left;
+    line-height: 5rem;
+}
+
+.sheZhi-button {
+    font-family: PingFang-SC-Regular;
+    font-size: 1.8rem;
+    color: #ff4040;
+    text-align: center;
+    width: 60%;
+    height: 5rem;
+    margin: 1rem auto;
+    line-height: 5rem;
+    letter-spacing: 0.5rem;
+    background-color: #ffffff;
+}
+
+.sheZhi-List ul {
+    padding-left: 0;
+}
+
+.sheZhi-List li {
+    line-height: 5rem;
+    border-bottom: 1px dashed #4a535b;
+    overflow: hidden;
+}
+
+.sheZhi-List li label {
+    float: left;
+    width: 30%;
+    margin: 0;
+    text-indent: 1rem;
+    letter-spacing: 0.2rem;
+}
+
+.sheZhi-List li:last-child {
+    border-bottom: none;
+}
+
+.sheZhi-List li > div {
+    float: left;
+}

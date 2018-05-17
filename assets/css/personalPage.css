@@ -1,0 +1,66 @@
+.person-info-box {
+    padding: 5%;
+    background: url("../../assets/i/my/bgc_img.png") no-repeat;
+    background-size: 100%;
+    overflow: hidden;
+}
+
+.person-img {
+    float: left;
+    width: 5.5rem;
+    height: 5.5rem;
+    border: 2px solid white;
+    border-radius: 50%;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.person-img img {
+    width: 65%;
+    height: 65%;
+    margin-left: 17%;
+    margin-top: 10px;
+}
+
+.payimg {
+    width: 20px;
+}
+
+.yh {
+    height: 15px;
+}
+
+.person-info {
+    float: left;
+    margin-left: 5%;
+    font-family: PingFang-SC-Medium;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.person-info p:first-child {
+    font-size: 1.8rem;
+    margin: 0 0 -10px 0;
+    line-height: 5rem;
+}
+
+.person-info p:last-child {
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+.woDe-card-biaoTi {
+    font-family: PingFang-SC-Regular;
+    font-size: 2.0rem;
+    color: #ffffff;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.login-enter {
+    line-height: 9rem;
+    margin-left: 2rem;
+    font-size: 1.6rem;
+    color: #fff;
+}
+

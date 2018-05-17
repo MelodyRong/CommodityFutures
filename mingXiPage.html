@@ -1,0 +1,81 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <title>明细</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/style.css"/>
+
+    <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/lib/amazeui.min.js"></script>
+    <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
+</head>
+
+<script type="text/javascript">
+    <!-- 页面加载完成请求资金明细 -->
+    $(document).ready(function () {
+        var yue = sessionStorage.getItem('ZhangHuYuE');
+        $("#MingXi_YuE").html(parseFloat(yue).toFixed(2));
+
+        get_ZiJinMingXi();
+    })
+
+</script>
+
+<script id="myZiJinMingXi_li_script" type="text/x-jquery-tmpl">
+  <li class="am-g am-list-item-desced" style="color: #ccc;border:none;border-bottom: 1px dashed #4c4f59;">
+    <div class="am-list-news-bd">
+      <ul class="am-avg-sm-2 am-text-center am-text-sm">
+        <li class="am-text-left">
+          <span style="font-weight: 600;">${mFundstype}</span>
+          <br>
+          <span id="stock-SZ" >${mChangedate}</span> 
+        </li>
+        <li class="am-text-right">
+          <span style="font-weight: 600;">${mChangemoney}</span>
+          <br>
+          <span id="stock-SZ" style="font-weight: 600;">${mChagestatus}</span> 
+        </li>
+      </ul>
+    </div>
+  </li>
+
+</script>
+
+<body style="background-color: #353e45;">
+<header data-am-widget="header" class="am-header am-header-default view-header"
+        style="background-color: #353e45;border-bottom: 1px solid 	#696969;">
+    <div class=" am-header-nav" onclick="window.history.go(-1);">
+        <img src="assets/i/back.png" style="width:30px;height: 30px;"/>
+    </div>
+    <h1 class="am-header-title">
+        <a href="#title-link" class="" style="color: white;">明细</a>
+    </h1>
+</header>
+<div class="mingXi-card">
+    <div><img class="mingXi-card image" src="assets/i/ChinaYuan.png"></div>
+    <br>
+    <span style="font-family:PingFang-SC-Regular;font-size:18px;color:#ccc;letter-spacing:0px;">账户余额</span>
+    <span id="MingXi_YuE" style="font-size: 3.0rem;color:#ccc;">--</span>
+    <a href="chongZhiPage.html" class="am-btn am-round"
+       style="width: 80%;margin-top:25px;background: #ff4040;color: #fff;">充值</a>
+    <a href="tiXianPage.html" class="am-btn am-round" style="width: 80%; margin-top:15px;background: #ccc;color: #000;">提现</a>
+</div>
+<div class="expenditure-details"><!--li-->
+    <ul class="am-list" id="myZiJinMingXi_li_div">
+
+    </ul>
+</div>
+</body>
+</html>
+

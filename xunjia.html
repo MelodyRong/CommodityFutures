@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <title>策略</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/public.css">
+    <link rel="stylesheet" href="assets/css/xunjia.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script src="assets/js/xunjia.js"></script>
+    <script id="demo" type="text/x-jquery-tmpl">
+        <!--行权周期列表-->
+        <li style="width: 8rem;float: left;font-size: 1.4rem;color: white;border:1px solid white;" class="btn_unselected" id="demo_root">${rCycle}</li>
+
+    </script>
+    <script id="tmpl_history" type="text/x-jquery-tmpl">
+        <div id="tmpl_history_item">
+            <div class="history_line" style="color: white;">
+                <div class="bold xunjiajilu" style="width: 8rem;">${name}</div>
+                    <div class="bold xunjiajilu">${code}</div>
+                    <div class="bold  xunjiajilu" >看涨期限:${week}</div>
+                    <div class="bold xunjiajilu" id="biao">标的数量:${quantity}</div>
+                </div>
+                <div class="history_line2">
+                    <div class="history_line2_column">
+                    <div class="redtext bold xunjiajilu">权利金比例:  ${premiumProportion}%</div>
+                    <div class="redtext bold xunjiajilu">认购权利金:${premium}</div>
+                </div>
+                <div class="btn_selected paddingleftright" style="border: none;">认购</div>
+            </div>
+        </div>
+
+    </script>
+</head>
+<body style="background-color: #212a32;">
+<div class="flex_row flex_around" id="mdiv_grids" style="color: white;">
+    <div class="mselected" onclick="mclick($(this),1)">
+        交易
+    </div>
+    <div class="munselected" onclick="mclick($(this),2)">
+        持仓
+    </div>
+</div>
+<div class="xunjia_base_row" style="color: white;">
+    <div class="left_text">
+        标的期权:
+    </div>
+    <div class="right_column ">
+        <div class="right_row">
+            <div class="flex_column">
+                <div class="divinput flex_row flex_between" style="height: 3rem;width: 100%">
+                    <select name="" id="jylist" style="width: 100%;background-color: rgba(255,255,255,0);border:none;">
+                        <!--选择商品的下拉列表-->
+                    </select>
+                </div>
+                <ul id="myUL" class="hidden">
+                    <li><a href="#">Adele</a></li>
+                    <li><a href="#">Agnes</a></li>
+                    <li><a href="#">Billy</a></li>
+                    <li><a href="#">Bob</a></li>
+                    <li><a href="#">Calvin</a></li>
+                    <li><a href="#">Christina</a></li>
+                    <li><a href="#">Cindy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div>最新价：</div>
+            <div id="newprice" onclick="window.location.href='stockdetail.html'">--</div>
+        </div>
+    </div>
+</div>
+<div class="xunjia_base_row">
+    <div class="left_text" style="line-height: 4rem;color: white;">
+        标的数量:
+        <span style="color: red;" id="shul"></span>
+    </div>
+    <div class="box">
+			<span class="subtract">
+				<img src="assets/i/subtract.png"/>
+			</span>
+        <span class="Number">
+				<input type="text" value="1" class="inp" id="inp_quantity"
+                       style="color: white;background-color: #212a32;border: none;text-align: center;"
+                       disabled="disabled"/>
+			</span>
+        <span class="plus">
+				<img src="assets/i/plus.png"/>
+			</span>
+    </div>
+</div>
+<div class="mingyibenjin" style="color:white;font-size:1.4rem;">
+    名义本金:
+    <span class="mybj_money" id="mybj_money" style="margin-left:2rem;">--</span>
+</div>
+<div class="xunjia_base_row">
+    <div class="left_text" style="line-height: 4rem;color: white;">行权周期:</div>
+    <div class="right_column ">
+        <div class="right_row">
+            <ul style="padding-left: 0;" id="content_week"></ul>
+        </div>
+    </div>
+</div>
+<div class=" bt_xunjia" id="1" onclick="xunjia()" style="margin-top:-9px;">询价</div>
+<div class=" flex_around" style="padding-left:20px">
+    <div class="mselected enquiry" id="enquiry" style="display: none;color: white;" onclick="mclick($(this),1)">
+        询价记录
+    </div>
+</div>
+<!--询价列表记录-->
+<div id="content_history" class="history" style="margin-bottom: 50px;"></div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default " id="" style="border: none;">
+    <ul class="am-navbar-nav am-cf am-avg-sm-4 nav-bar-bg" style="background-color: #313A45;">
+        <li>
+            <a id="BackIndex">
+                <img src="assets/i/nav-home@2x.png"/>
+                <span class="am-navbar-label">首页</span>
+            </a>
+        </li>
+        <li>
+            <a href="optionalStockPage.html">
+                <img src="assets/i/nav-stock@2x.png"/>
+                <span class="am-navbar-label">策略</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                <img src="assets/i/nav-trader@2x.png"/>
+                <span class="am-navbar-label" style="color:#ff4040;">交易</span>
+            </a>
+        </li>
+        <li>
+            <a href="personalPage.html">
+                <img src="assets/i/nav-personal@2x.png"/>
+                <span class="am-navbar-label">我的</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!--询价结果弹框-->
+<div id="sMessage">
+    <div id="sMessagePrompt">
+        <div class="sT">询价结果</div>
+        <div class="sS">
+            <div class="xunjia_base_row flex_between">
+                <div class="rengou_left_text"> 标的股票:</div>
+                <div class="rengou_right_text" id="name"></div>
+            </div>
+            <div class="xunjia_base_row flex_between">
+                <div class="rengou_left_text">标的数量:</div>
+                <div class="rengou_right_text red" id="bengjin">--</div>
+            </div>
+            <div class="xunjia_base_row flex_between">
+                <div class="rengou_left_text">当前价:</div>
+                <div class="rengou_right_text red" id="price">--</div>
+            </div>
+            <div class="xunjia_base_row flex_between">
+                <div class="rengou_left_text">行权周期:</div>
+                <div class="rengou_right_text" id="week">--</div>
+            </div>
+            <div class="xunjia_base_row flex_between">
+                <div class="rengou_left_text">交易方式:</div>
+                <div class="rengou_right_text">市价委托</div>
+            </div>
+
+            <div class="xunjia_base_row flex_between">
+                <div class="rengou_left_text">权利金比例:</div>
+                <div class="rengou_right_text red" id="premiumProportion">--</div>
+            </div>
+            <div class="xunjia_base_row flex_between">
+                <div class="rengou_left_text">权利金:</div>
+                <div class="rengou_right_text red" id="premium">--</div>
+            </div>
+            <div class="xunjia_base_row flex_between">
+                <div class="rengou_left_text">账户余额:</div>
+                <div class="rengou_right_text red" id="yue">--</div>
+            </div>
+            <div class="xunjia_base_row flex_between">
+                <table border="1" class="table">
+                    <tr class="table">
+                        <th class="table_title">预期涨幅</th>
+                        <th class="table_title">盈亏比例</th>
+                        <th class="table_title">盈利金额</th>
+                    </tr>
+                    <tr>
+                        <td id="11" class="red">--</td>
+                        <td id="12" class="red">--</td>
+                        <td id="13" class="red" style="text-align: right;padding-right: 1rem;"></td>
+                    </tr>
+                    <tr>
+                        <td id="21" class="red">--</td>
+                        <td id="22" class="red">--</td>
+                        <td id="23" class="red" style="text-align: right;padding-right: 1rem;"></td>
+                    </tr>
+                    <tr>
+                        <td id="31" class="red">--</td>
+                        <td id="32" class="red">--</td>
+                        <td id="33" class="red" style="text-align: right;padding-right: 1rem;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="protocol-btn">
+            <input type="checkbox" checked="checked" id="checkProtocol"/>我同意
+            <a href="heZuoXiYiPage.html">《委托合作协议》</a>
+        </div>
+        <div class="twoBtn">
+            <div class="ok bt_xunjia qx_xunjia" id="qx_rengou">取消</div>
+            <div class="ok bt_xunjia" id="rengou">立即认购</div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+    var BackIndex = document.getElementById("BackIndex");
+    var BackIndexUrl = "index.html?math=" + Math.random() * 100;
+    BackIndex.onclick = function () {
+        window.location.href = BackIndexUrl;
+    }
+</script>
+</html>

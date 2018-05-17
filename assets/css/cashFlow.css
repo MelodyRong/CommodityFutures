@@ -1,0 +1,217 @@
+body {
+    background: #f1f1f1;
+}
+
+ul li {
+    list-style: none;
+}
+
+.invest-bank {
+    width: 100%;
+    height: 6rem;
+    margin: 1rem 0;
+    padding: 0 1.5rem;
+    background: #fff;
+    position: relative;
+}
+
+.invest-bank .bank-logo {
+    float: left;
+    width: 4.2rem;
+    height: 4rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+.invest-bank .bank-logo img {
+    width: 100%;
+    height: 100%;
+}
+
+.invest-bank .bank-msg {
+    float: left;
+}
+
+.invest-bank .bank-msg h2 {
+    height: 3rem;
+    margin: 0;
+    font-weight: normal;
+    font-size: 1.6rem;
+    line-height: 3rem;
+}
+
+.invest-bank .bank-msg p {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #666;
+}
+
+.invest-bank .select-bank-arrow {
+    float: right;
+    width: 1.5rem;
+    height: 3rem;
+    margin-top: 1.5rem;
+}
+
+.invest-bank .select-bank-arrow img {
+    width: 100%;
+    height: 100%;
+    vertical-align: baseline;
+}
+
+.invest-bank ul {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    top: 6rem;
+    overflow: hidden;
+    display: none;
+}
+
+.invest-bank ul li {
+    width: 100%;
+    height: 6rem;
+    padding: 0 1.5rem;
+    line-height: 6rem;
+    border-top: 1px solid #F1F1F1;
+}
+
+.invest-bank ul li:last-child {
+    border-bottom: 1px solid #F1F1F1;
+}
+
+.list-active ul {
+    display: block;
+}
+
+.invest-amount {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    background: #fff;
+    overflow: hidden;
+}
+
+.invest-amount .amount-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.invest-amount ul {
+    overflow: hidden;
+    margin: 0;
+    padding: 1rem 0 0 0;
+}
+
+.invest-amount ul li {
+    float: left;
+    width: 21%;
+    margin: 1rem 2%;
+    padding: 0.5rem 0;
+    background: #ffffff;
+    border: 1px solid #979797;
+    border-radius: 10px;
+    text-align: center;
+    color: #999;
+    font-size: 1.4rem;
+}
+
+.invest-amount ul li.list-active {
+    background: #FF4040;
+    color: #fff;
+    border-color: #ff4040;
+}
+
+.handwriting {
+    width: 100%;
+    height: 4.5rem;
+    margin-bottom: 4rem;
+    padding: 0 1.5rem;
+    background: #fff;
+}
+
+.handwriting label {
+    float: left;
+    line-height: 4.5rem;
+    margin-bottom: 0;
+    margin-right: 8%;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.handwriting input[type="text"] {
+    float: left;
+    width: 70%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+}
+
+.handwriting span {
+    float: left;
+    display: inline-block;
+    width: 10%;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #000;
+    line-height: 4.5rem;
+}
+
+.invest-btn {
+    width: 80%;
+    height: 4.5rem;
+    margin: 0 auto;
+    line-height: 4.5rem;
+    border-radius: 1rem;
+    background: #FF4040;
+    color: #fff;
+    text-align: center;
+}
+
+.tixian-rule {
+    overflow: hidden;
+    margin-bottom: 4rem;
+    padding: 0 1.5rem;
+    font-size: 1.2rem;
+    line-height: 3rem;
+}
+
+.tixian-rule .tixian-money {
+    float: left;
+}
+
+.tixian-rule .tixian-num {
+    float: right;
+}
+
+.tixian-rule .tixian-money i {
+    font-style: normal;
+    color: #ff4040;
+}
+
+.tixian-rule .tixian-num span {
+    color: #ff4040;
+}
+
+.about-password {
+    padding: 0 1.5rem;
+    overflow: hidden;
+    line-height: 5rem;
+    font-size: 1.2rem;
+}
+
+.about-password .set-password {
+    float: left;
+}
+
+.about-password .change-password {
+    float: right;
+    color: #ff4040;
+}

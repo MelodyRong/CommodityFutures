@@ -1,0 +1,163 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <title>绑定银行卡</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.address.min.css"/>
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/bankListPage.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+
+    <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+    <script src="assets/js/lib/amazeui.min.js"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script type="text/javascript">
+        var bankData = {};
+        var provincesData = {};
+        var cityData = {};
+        var branchData = {};
+        //设置提示框消失时间
+        $.toast.prototype.defaults.duration = 1000;
+    </script>
+</head>
+<!-- 动态生成总行列表 -->
+<script id="allBank_li_script" type="text/x-jquery-tmpl">
+     <li class="am-active" onclick="selectedBankData(this)">${mBankname}</li>
+
+</script>
+<!-- 动态生成省份列表 -->
+<script id="allProvinces_li_script" type="text/x-jquery-tmpl">
+     <li class="am-active" onclick="selectedProvincesData(this)">${mProvincesname}</li>
+
+</script>
+<!-- 动态生成城市列表 -->
+<script id="allCity_li_script" type="text/x-jquery-tmpl">
+     <li class="am-active" onclick="selectedCityData(this)">${cityname}</li>
+
+</script>
+<!-- 动态生成分行列表 -->
+<script id="allBranch_li_script" type="text/x-jquery-tmpl">
+     <li class="am-active" onclick="selectedBranchData(this)">${mBranchname}</li>
+
+</script>
+<body style="background:#212a32">
+<header data-am-widget="header" class="am-header am-header-default view-header"
+        style="background-color: #353e45;border-bottom: 1px solid #696969;">
+    <div class=" am-header-nav" onclick="window.history.go(-1);">
+        <img src="assets/i/back.png" style="width:30px;height: 30px;"/>
+    </div>
+    <h1 class="am-header-title">
+        <a href="#title-link" class="" style="color: white;">绑定银行卡</a>
+    </h1>
+</header>
+<div class="bankLi-List">
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">发卡行：</div>
+        <a href="javascript: void(0)" id="bankLi-Name" class="bankLi-List rightLabel" onclick="get_MBanks()"
+           style="color: #999;">请选择发卡行</a>
+    </div>
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">省份：</div>
+        <a href="javascript: void(0)" id="provincesLi-Name" class="bankLi-List rightLabel"
+           onclick="get_MProvincesList()" style="color: #999;">请选择省份</a>
+    </div>
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">城市：</div>
+        <a href="javascript: void(0)" id="cityLi-Name" class="bankLi-List rightLabel"
+           onclick="get_MCityList(provincesData)" style="color: #999;">请选择城市</a>
+    </div>
+    <div class="bankLi-List cell">
+        <div class="bankLi-List leftLabel" style="color: white;">分行：</div>
+        <a href="javascript: void(0)" id="branchLi-Name" class="bankLi-List rightLabel"
+           onclick="get_MBranchList(bankData,cityData)" style="color: #999;">请选择分行</a>
+    </div>
+</div>
+<div class="bankLi-button" onclick="goToQianYuePage()">下一步</div>
+
+
+<!--===========================================================弹出层===============================-->
+
+<div class="am-popup am-address-popup" id="qianYuePopup">
+    <div class="am-popup-inner">
+        <div class="am-popup-hd">
+            <h2 class="am-popup-title" id="popupTitle"></h2>
+            <span data-am-modal-close class="am-close">&times;</span>
+        </div>
+        <div class="am-u-sm-12 am-address-prov">
+            <ul class="am-list am-list-static" id="popup-list">
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function ShowMyBankPopup() {
+        $("#qianYuePopup").modal("open");
+    };
+    //选择
+    function selectedBankData(item) {
+        bankData = $.tmplItem(item).data;
+        console.log(bankData);
+
+        provincesData = {};
+        cityData = {};
+        branchData = {};
+        $("#provincesLi-Name").html("请选择省份");
+        $("#cityLi-Name").html("请选择城市");
+        $("#branchLi-Name").html("请选择分行");
+
+        $("#bankLi-Name").html(bankData.mBankname);
+        $("#qianYuePopup").modal("close");
+    }
+    function selectedProvincesData(item) {
+        provincesData = $.tmplItem(item).data;
+        console.log(provincesData);
+
+        cityData = {};
+        branchData = {};
+        $("#cityLi-Name").html("请选择城市");
+        $("#branchLi-Name").html("请选择分行");
+
+        $("#provincesLi-Name").html(provincesData.mProvincesname);
+        $("#qianYuePopup").modal("close");
+    }
+    function selectedCityData(item) {
+        cityData = $.tmplItem(item).data;
+
+        var selectedCity = JSON.stringify(cityData);
+        localStorage.setItem('selectedCityDic', selectedCity);
+
+        branchData = {};
+        $("#branchLi-Name").html("请选择分行");
+
+        $("#cityLi-Name").html(cityData.cityname);
+        $("#qianYuePopup").modal("close");
+    }
+
+    function selectedBranchData(item) {
+        branchData = $.tmplItem(item).data;
+        var selectedBranch = JSON.stringify(branchData);
+        localStorage.setItem('selectedBranchDic', selectedBranch);
+
+        $("#branchLi-Name").html(branchData.mBranchname);
+        $("#qianYuePopup").modal("close");
+    }
+
+    function goToQianYuePage() {
+        if (JSON.stringify(branchData) == '{}') {
+            $.toast('请选择银行！', "text");
+        }
+        else {
+            document.location.href = "qianYuePage.html";
+        }
+    }
+</script>
+</html>

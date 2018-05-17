@@ -1,0 +1,72 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <title>设置</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/sheZhiPage.css">
+    <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/lib/amazeui.min.js"></script>
+    <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
+</head>
+<script type="text/javascript">
+    <!-- 页面加载完成请求资金明细 -->
+    $(document).ready(function () {
+        var Login = sessionStorage.getItem('isLogin');
+        if (Login == "true") {
+            //获取用户信息
+            getUserInformation();
+            console.log(123)
+        }
+    })
+</script>
+<body style="background: #313a45;">
+<header data-am-widget="header" class="am-header am-header-default view-header my-header" style="background: #353e45;">
+    <div class="am-header-left am-header-nav" onclick="window.history.go(-1);"
+         style="background: url(assets/i/c48865d7_d934_4183_9e36_ef16d6eb08e7@1x@2x.png);background-size: 100% 100%;">
+        <a href="#left-link" class="">
+            <i class="am-header-icon"></i>
+        </a>
+    </div>
+    <h1 class="am-header-title">
+        <a href="#title-link" style="font-size: 1.8rem;font-weight: 600;">设置</a>
+    </h1>
+</header>
+<div class="sheZhi-card">
+    <div style="margin-top: 1.5rem;">
+        <img class="sheZhi-card image" src="assets/i/portrait.png">
+    </div>
+    <span id="sheZhi_YuE" class="sheZhi-card-biaoTi">--</span>
+</div>
+
+<div class="sheZhi-List">
+    <ul style="background-color: #313a45;">
+        <li>
+            <label for="" style="color: white;">手机号码：</label>
+            <div id="sheZhi-List-mobile" style="color: white;"></div>
+        </li>
+        <li>
+            <label for="" style="color: white;">交易代码：</label>
+            <div id="transaction-code" style="color: white;"></div>
+        </li>
+        <li>
+            <label for="" style="color: white;">登录密码：</label>
+            <div id="sheZhi-List-name" style="color: #ff4040;" onclick="window.location.href='xiuGaiMiMa.html'">修改密码
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="sheZhi-button" onclick="get_Logout()" style="background-color: red;color: white;border-radius: 10px;">退出登录
+</div>
+</body>
+</html>
+

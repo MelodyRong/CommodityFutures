@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+  <meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+  <title>登录</title>
+
+  <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+  <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  
+  <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+  <script src="assets/js/lib/amazeui.min.js"></script>
+  <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+  <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//设置提示框消失时间
+    	$.toast.prototype.defaults.duration = 800;
+		}) 
+	</script>
+</head>
+<body style="background-color: #353e45;">
+
+<div>
+  <header data-am-widget="header" class="am-header am-header-default view-header" style="background-color: #353e45;border-bottom: 1px solid 	#696969;">
+	  <div class=" am-header-nav" onclick="window.history.go(-1);">
+	      <img src="assets/i/back.png" style="width:30px;height: 30px;"/>
+	  </div>
+	  <h1 class="am-header-title">
+	      <a href="#title-link" class="" style="color: white;">登录</a>
+	  </h1>
+  </header>
+
+    <div class="cart-panel registration-infor" style="background: #353e45;padding-top: 4rem;">
+        <form class="am-form" >         
+            <div class="am-form-group am-form-icon">
+	            <i class="icon-user">
+	            	<img src="assets/i/person.png"/>
+	            </i>
+	            <input type="text" id="LognameCode" class="am-form-field  my-radius" placeholder="请输入您的手机号" style="font-size:1.4rem;background-color: #353e45;color: white;">
+	        	</div>
+						<div class="am-form-group am-form-icon">
+	            <i class="icon-user">
+	            	<img src="assets/i/lock.png"/>
+	            </i>
+	            <input type="password" id="LogpwdCode" class="am-form-field  my-radius" placeholder="请输入您的密码" style="font-size:1.4rem;background-color: #353e45;color: white;">
+	        	</div>
+            <p class="am-text-center reg-btn">
+            	<button type="button" class="am-btn am-btn-danger am-radius am-btn-block" onclick="get_Login()" style="outline: none;font-size:1.4rem ">登录</button>
+            </p>
+        </form>
+        <div class="am-text-center" style="padding: 1rem 0;">
+            <a style="color: red ;font-size:1.4rem" href="registration.html">注册</a>
+        </div>
+        <div class="am-text-center" style="padding: 1rem 0;">
+            <a style="color: red;font-size:1.4rem" onclick="wangjimima()">忘记密码</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

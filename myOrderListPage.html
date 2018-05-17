@@ -1,0 +1,379 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <title>持仓</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/public.css">
+    <link rel="stylesheet" href="assets/css/xunjia.css">
+    <link rel="stylesheet" href="assets/css/style.css"/>
+
+    <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+    <!--<script src="assets/js/xunjia.js"></script>-->
+    <script src="assets/js/lib/amazeui.min.js"></script>
+    <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <style>
+        .weui-dialog__ft {
+            font-size: 1.6rem;
+        }
+    </style>
+</head>
+
+<!-- 这里是改写amazeUI控件   -->
+<style type="text/css">
+    /*这里是改写边距*/
+    [data-am-widget='tabs'] {
+        margin: 0px;
+    }
+    /*这里是改写文字的颜色*/
+    .am-menu-default .am-menu-nav a {
+        color: #222;
+    }
+    /*这里是改写背景的颜色*/
+    .am-menu-nav {
+        background: #f1f1f1;
+    }
+    .home-Stock-label {
+        font-size: 1.5rem;
+    }
+</style>
+
+<script type="text/javascript">
+    <!-- 页面加载完成请求持仓信息 -->
+    $(document).ready(function () {
+        get_MyInPositions();
+        //设置提示框消失时间
+        $.toast.prototype.defaults.duration = 2000;
+    })
+    // 持仓中列表触发函数
+    function myOrder_CCZ_li(item) {
+        $("#myOrder_PC_Page_script").tmpl(item).appendTo('#MyDiv');
+        ShowMyOrderDiv();
+    }
+    // 已结算列表触发函数
+    function myOrder_YJS_li(item) {
+    }
+    <!-- 未成交列表触发函数 -->
+    function myOrder_WCJ_li(item) {
+        if (item.tTransDown != 'F' && item.tTransDown != "D") {
+            get_updateTransDown(item);
+        }
+    }
+    //点击返回交易页
+    function mclick(div, clickPosition) {
+        if (clickPosition == 1) {
+            window.location.href = 'xunjia.html';
+        } else {
+            window.location.href = 'myOrderListPage.html';
+        }
+    }
+</script>
+<!-- 动态生成列表 持仓中-->
+<script id="myOrder_CCZ_li_script" type="text/x-jquery-tmpl">
+  <li class="am-g am-list-item-desced" onclick="myOrder_CCZ_li($.tmplItem(this).data)" style="background-color: #212a32;color:#dddfe0;border-bottom:1px dotted #4a535b;">
+    <div class="am-list-news-bd">
+      <ul class="am-avg-sm-5 am-text-center am-text-sm">
+        <li class="am-text-center">${tStockcode}<br/>${tStockname}</li>
+        <li class="am-text-center"><span class="list-product-sorce-span">${tCurrentprice}<br/>${tOpenprice}</span></span></li>
+        <li class="am-text-center"><span class="list-product-sorce-span">${tPremium}<br/><span>${tHavenum}</span></span></li>
+        <li class="am-text-center"><span class="list-product-sorce-span">${tBuydatetime}<br/><span>${tEnddate}</span></span></li>
+        <li class="am-text-center">--</li>
+      </ul>
+    </div>
+  </li>
+</script>
+
+<!-- 动态生成列表 已结算-->
+<script id="myOrder_YJS_li_script" type="text/x-jquery-tmpl">
+  <li class="am-g am-list-item-desced" onclick="myOrder_YJS_li($.tmplItem(this).data)"  style="background-color: #212a32;color:#dddfe0;border-bottom:1px dotted #4a535b;">
+    <div class="am-list-news-bd">
+      <ul class="am-avg-sm-5 am-text-center am-text-sm">
+        <li class="am-text-center" style="font-size: 1.2rem;">${tStockcode}<br/>${tStockname}</li>
+        <li class="am-text-center"><span class="list-product-sorce-span">${tEntrusprice}<br/><span>${tOpenprice}</span></span></li>
+        <li class="am-text-center">${tEntrusnum}</li>
+        <li class="am-text-center"><span class="list-product-sorce-span">${tPremium}<br/><span>${tEnddate}</span></span></li>
+        <li class="am-text-center">--</li>
+      </ul>
+    </div>
+  </li>
+</script>
+
+<!-- 动态生成列表 未完成订单-->
+<script id="myOrder_WWC_li_script" type="text/x-jquery-tmpl">
+  <li class="am-g am-list-item-desced"  style="background-color: #212a32;color:#dddfe0;border-bottom:1px dotted #4a535b;">
+    <div class="am-list-news-bd">
+      <ul class="am-avg-sm-6 am-text-center am-text-sm" style="font-size: 1.2rem;">
+        <li class="am-text-center">${tStockcode}<br/>${tStockname}</li>
+        <li class="am-text-center"><span class="list-product-sorce-span">${tCurrentprice}<br/><span>--</span></span></li>
+        <li class="am-text-center">${tNotionalprincipal}</li>
+        <li class="am-text-center">${tPremium}</li>
+        <li class="am-text-center">${tTranstype}</li>
+        <li class="am-text-center" onclick="myOrder_WCJ_li($.tmplItem(this).data)" style="color: green">${statusHtml}</li>
+      </ul>
+    </div>
+  </li>
+</script>
+<body style="background-color:#212A32;">
+<div class="flex_row flex_around" id="mdiv_grids" style="margin-bottom: 1rem;color:white;">
+    <div class="munselected" onclick="mclick($(this),1)">
+        交易
+    </div>
+    <div class="mselected" onclick="mclick($(this),2)">
+        持仓
+    </div>
+</div>
+<div data-am-widget="tabs" class="am-tabs am-tabs-default tab-btn">
+    <ul class="am-tabs-nav am-cf" style="background: #212a32;border-bottom: 1px solid #4a535b;">
+        <li class="am-active"><a href="javascript: void(0)" onclick="get_MyInPositions()" style="color:white;">持仓单</a>
+        </li>
+        <li class=""><a href="javascript: void(0)" onclick="get_MyClosePositions()" style="color:white;">委托单</a></li>
+        <li class=""><a href="javascript: void(0)" onclick="get_holdUnfinish()" style="color:white;">历史成交</a></li>
+    </ul>
+    <div class="am-tabs-bd" style="border-bottom:0px solid #f00;">
+        <!-- 页面1 -->
+        <div data-tab-panel-0 class="am-tab-panel am-active list-box" style="padding: 0;">
+            <div data-am-widget="list_news" class="am-list-news am-list-news-default"
+                 style="margin: 0 1rem;font-size: 1.2rem;"><!-- List -->
+                <div class="am-list-news-hd am-cf line-header"
+                     style="padding: 1.2rem 0;border-bottom: 1px solid #4a535b;"><!--标题-->
+                    <ul class="am-avg-sm-6 am-text-center am-text-l" style="color:#6d737c;">
+                        <li class="am-text-center" style="line-height: 2.9rem;">合约名称</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">多空</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">持仓/可用</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">开仓价</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">浮动盈亏</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">操作</li>
+                    </ul>
+                </div>
+                <div class="am-list-news-bd small-size"><!--li-->
+                    <ul class="am-list" id="myOrder_CCZ_li_div" style="margin-bottom: 0;padding-bottom: 8rem;">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 页面2 -->
+        <div data-tab-panel-1 class="am-tab-panel list-box" style="padding: 0;">
+            <div data-am-widget="list_news" class="am-list-news am-list-news-default"><!-- List -->
+                <div class="am-list-news-hd am-cf"
+                     style="padding: 1.2rem 0;font-size: 1.2rem;border-bottom: 1px solid #4a535b;"><!--标题-->
+                    <ul class="am-avg-sm-5 am-text-center am-text-l line-header" style="color:#6d737c;">
+                        <li class="am-text-center" style="line-height: 2.9rem;">合约名称</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">多空</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">持仓/可用</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">开仓价</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">浮动盈亏</li>
+                    </ul>
+                </div>
+                <div class="am-list-news-bd"><!--li-->
+                    <ul class="am-list" id="myOrder_YJS_li_div" style="margin-bottom: 0;padding-bottom: 8rem;">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 页面3 -->
+        <div data-tab-panel-2 class="am-tab-panel list-box" style="padding: 0;">
+            <div data-am-widget="list_news" class="am-list-news am-list-news-default" style="margin: 0 1rem;">
+                <!-- List -->
+                <div class="am-list-news-hd am-cf"
+                     style="padding: 1.2rem 0;font-size: 1.2rem;border-bottom: 1px solid #4a535b;"><!--标题-->
+                    <ul class="am-avg-sm-6 am-text-center am-text-l" style="color:#6d737c;">
+                        <li class="am-text-center" style="line-height: 2.9rem;">合约名称</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">多空</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">持仓/可用</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">开仓价</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">浮动盈亏</li>
+                        <li class="am-text-center" style="line-height: 2.9rem;">操作</li>
+                    </ul>
+                </div>
+                <div class="am-list-news-bd"><!--li-->
+                    <ul class="am-list" id="myOrder_WWC_li_div" style="margin-bottom: 0;padding-bottom: 8rem;"></ul>
+                </div>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default " id="" style="border:none;">
+    <ul class="am-navbar-nav am-cf am-avg-sm-4 nav-bar-bg" style="background-color:#3d464e;">
+        <li>
+            <a href="index.html">
+                <img src="assets/i/nav-home@2x.png"/>
+                <span class="am-navbar-label">首页</span>
+            </a>
+        </li>
+        <li>
+            <a href="optionalStockPage.html">
+                <img src="assets/i/nav-stock@2x.png"/>
+                <span class="am-navbar-label">策略</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <img src="assets/i/nav-trader@2x.png"/>
+                <span class="am-navbar-label" style="color:#ff4040;">交易</span>
+            </a>
+        </li>
+        <li>
+            <a href="personalPage.html">
+                <img src="assets/i/nav-personal@2x.png"/>
+                <span class="am-navbar-label">我的</span>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+<!--===========================================================弹出层===============================-->
+<div id="fade" class="black_overlay">
+</div>
+<div id="MyDiv" class="white_content">
+</div>
+</body>
+<script type="text/javascript">
+    //弹出隐藏层
+    function ShowMyOrderDiv() {
+        var scrollHeight = document.body.scrollHeight; //文档高度
+        document.getElementById("fade").style.height = scrollHeight + 'px';
+        document.getElementById("MyDiv").style.display = 'block';
+        document.getElementById("fade").style.display = 'block';
+    };
+
+    //关闭弹出层
+    function CloseMyOrderDiv() {
+        $("#MyDiv").empty();
+        document.getElementById("MyDiv").style.display = 'none';
+        document.getElementById("fade").style.display = 'none';
+    };
+
+</script>
+
+<!-- ===========================================================弹框end ====================================   -->
+
+<!-- 动态生成平仓页面-->
+<script id="myOrder_PC_Page_script" type="text/x-jquery-tmpl">
+    <header data-am-widget="header" class="am-header am-header-default my-header" style="background: #ff4040;">
+        <h1 class="am-header-title"><a href="#">平仓</a></h1>
+    </header>
+    <div data-am-widget="list_news" class="am-list-news am-list-news-default"><!-- List -->
+        <div class="am-list-news-bd"><!--li-->
+            <ul class="am-list" id="myOrder_PC_li_div">
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">股票代码</li>
+                    <li class="am-text-right">${tStockcode}</li>
+                  </ul>
+                </div>
+              </li>
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">股票名称</li>
+                    <li class="am-text-right">${tStockname}</li>
+                  </ul>
+                </div>
+              </li>
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">期初价</li>
+                    <li class="am-text-right">${tOpenprice}</li>
+                  </ul>
+                </div>
+              </li>
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">当前价</li>
+                    <li class="am-text-right">${tCurrentprice}</li>
+                  </ul>
+                </div>
+              </li>
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">参考盈亏</li>
+                    <li class="am-text-right">--</li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">权利金</li>
+                    <li class="am-text-right">${tPremium}</li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">持有数量</li>
+                    <li class="am-text-right">${tHavenum}</li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">权利金比例</li>
+                    <li class="am-text-right">${tPremiumproportion}</li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">认购日期</li>
+                    <li class="am-text-right">${tBuydatetime}</li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="am-g am-list-item-desced">
+                <div class="am-list-news-bd">
+                  <ul class="am-avg-sm-2 am-text-center am-text-sm">
+                    <li class="am-text-left">到期日期</li>
+                    <li class="am-text-right">${tEnddate}</li>
+                  </ul>
+                </div>
+              </li>
+
+            </ul>
+        </div>
+    </div>
+    
+  <div class="am-u-lg-6">
+      <div class="am-input-group">
+        <input type="text" readonly="readonly" class="am-form-field" id="myOrde_CCZ_Input_Num" value="${tHavenum}">
+        <span class="am-input-group-btn">
+          <button class="am-btn am-btn-default" type="button">平仓数量</button>
+        </span>
+      </div>
+  </div>
+  <br>
+  <div>
+      <ul class="am-avg-sm-2 am-text-center">
+        <li class="am-text-center am-padding-sm">
+          <button type="button" class="am-btn am-btn-success am-btn-block am-radius am-btn-sm" onclick="CloseMyOrderDiv()">取消</button></li>
+        <li class="am-text-center am-padding-sm">
+          <button type="button" class="am-btn am-btn-danger am-btn-block am-radius am-btn-sm" onclick="get_addEntrustOrder($.tmplItem(this).data)" style="background: #ff4040;">委托平仓</button></li>
+      </ul>
+  </div>
+</script>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html class="no-js" style="font-size: 10px!important;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=0, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <title>签约</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="assets/css/lib/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/style.css"/>
+
+    <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/lib/amazeui.min.js"></script>
+    <script src="assets/js/NetworkManager.js"></script><!-- 网络JS -->
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //查询可签约银行
+            get_mBanksList();
+
+            // 查询已签约银行信息
+            get_myBankName();
+        })
+    </script>
+
+    <!-- 动态生成已签约银行列表-->
+    <script id="dynamic_generation_bank_list" type="text/x-jquery-tmpl">
+	  <li>
+			<div class="logo-name">
+				<i>
+					<img src="${bankImg}"/>
+				</i>
+				<span>${bankName}</span>
+			</div>
+			<div class="bank-count">${account}</div>
+		</li>
+
+    </script>
+    <!-- 动态获取可签约银行列表-->
+    <script id="can_contract_bank_temp" type="text/x-jquery-tmpl">
+	  <li onclick="get_bank_name(this)">${mBankname}</li>
+    </script>
+</head>
+
+<body style="background-color: #353e45;">
+<header data-am-widget="header" class="am-header am-header-default view-header my-header"
+        style="background: #353e45;border-bottom: 1px solid 	#696969;">
+    <div class="am-header-left am-header-nav" onclick="window.history.go(-1);"
+         style="background: url(assets/i/c48865d7_d934_4183_9e36_ef16d6eb08e7@1x@2x.png);background-size: 100% 100%;">
+        <a href="#left-link" class="">
+            <i class="am-header-icon"></i>
+        </a>
+    </div>
+    <h1 class="am-header-title">
+        <a href="#title-link" class="">银行卡</a>
+    </h1>
+</header>
+<div class="card-box">
+    <ul id="get_contract_temp">
+    </ul>
+</div>
+<div class="add-sign-contract" id="add-sign-contract" onclick="toggle_list(this)" style="border:none">
+    <div class="plus-sign">+</div>
+    <div class="select-arrow">
+        <img src="assets/i/index/right-arrow.png">
+    </div>
+    <input type="text" readonly="readonly" id="name-input" placeholder="添加可签约银行"
+           style="border-radius: 10px;background-color: #a9a9a9;"/>
+    <ul id="can_contract_bank_list"></ul>
+</div>
+<div class="add-card" id="go_contract">
+    <a onclick="saveQYdata()">
+        <i class="am-icon-plus"></i>去签约</a>
+</div>
+<script type="text/javascript">
+    var QYdata;
+
+    //显示隐藏可签约银行list
+    function toggle_list(ele) {
+        if ($(ele).hasClass("showlist")) {
+            $(ele).removeClass("showlist")
+        } else {
+            $(ele).addClass("showlist");
+        }
+    }
+
+    //选择可签约银行
+    function get_bank_name(ele) {
+        $("#name-input").val($(ele).html());
+    }
+
+    //保存选中的签约银行信息
+    function saveQYdata() {
+        var bankName = $("#name-input").val();
+        if (bankName == "") {
+            $.toast('请选择签约银行', "text");
+            return;
+        }
+        for (var i = 0; i < QYdata.length; i++) {
+            if (QYdata[i].mBankname == bankName) {
+                var str = JSON.stringify(QYdata[i]);
+                sessionStorage.setItem('QYBanksData', str);
+            }
+        }
+        window.location.href = 'selectBankPage.html';
+    }
+</script>
+</body>
+</html>

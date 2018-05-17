@@ -1,0 +1,157 @@
+.paddingBaseDiv {
+    padding: 10px;
+}
+
+.top3 {
+    margin-top: 10px;
+}
+
+.search {
+    width: 100%;
+    height: 100%;
+}
+
+.pad {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.bg {
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 100px;
+    width: 90%;
+    height: 3.5rem;
+    margin: 0 auto;
+    padding-left: 15px;
+    background-size: 100% 100%;
+    color: #ccc;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.bg > input[type="text"] {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    vertical-align: baseline;
+    border-radius: 100px;
+}
+
+.bg > i {
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    right: 2rem;
+    top: 0.55rem;
+}
+
+.bg > i img {
+    width: 100%;
+    height: 100%;
+    vertical-align: baseline;
+}
+
+.weui-flex__item {
+    margin-bottom: 1px;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    align-items: center;
+}
+
+.weui-flex__item_chang {
+    -webkit-box-flex: 1.5;
+    -webkit-flex: 1.5;
+    flex: 1;
+    align-items: center;
+}
+
+.flex {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-transition: .3s;
+    transition: .3s;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.list_text_bold {
+    line-height: 40px;
+    color: #ccc;
+    font-size: 13px;
+}
+
+.list_text {
+    padding: 10 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.list_btn {
+    color: var(--red);
+    border: 1px solid var(--red);
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.xunjia_base_row {
+    padding: 10px;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+}
+
+.divider_high {
+    width: 90%;
+    height: 50px;
+    background: var(--bggrey);
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.search-r {
+    border: 1px solid #cccccc;
+    border-radius: 100px;
+    width: 90%;
+    height: 3.5rem;
+    line-height: 3.5rem;
+    margin: 2rem auto;
+    padding-left: 15px;
+    background-size: 100% 100%;
+    color: #ccc;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.search-r i {
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    right: 2rem;
+    top: 0.55rem;
+}
+
+.search-r i img {
+    width: 100%;
+    height: 100%;
+    vertical-align: baseline;
+}
+
+.zhishu {
+    justify-content: space-around;
+}
+
+.top3 li > span {
+    color: #666;
+}
+
+#content_optional .flex_column:last-child {
+    margin-bottom: 6rem;
+}
